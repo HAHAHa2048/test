@@ -1,1 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社会实践作品宣传</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background: #254b7c;
+            color: white;
+            text-align: center;
+            padding:40px 20px;
+        }
+        header h1 {
+            font-size:32px;
+            margin-bottom:10px;
+        }
+        header p {
+            font-size:16px;
+            opacity:0.85;
+        }
 
+        /* 轮播容器 */
+        .slider-wrap {
+            max-width:1000px;
+            margin:40px auto;
+            position: relative;
+            overflow:hidden;
+            border-radius:14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+            height:500px;
+        }
+        .slider-item {
+            width:100%;
+            height:100%;
+            position:absolute;
+            top:0;
+            left:0;
+            opacity:0;
+            transition: opacity 0.8s ease;
+        }
+        .slider-item.active {
+            opacity:1;
+        }
+        .slider-item img {
+            width:100%;
+            height:100%;
+            object-fit: cover;
+        }
+        /* 轮播小圆点 */
+        .dots {
+            position:absolute;
+            bottom:20px;
+            left:50%;
+            transform:translateX(-50%);
+            display:flex;
+            gap:10px;
+        }
+        .dot {
+            width:12px;
+            height:12px;
+            border-radius:50%;
+            background:rgba(255,255,255,0.45);
+            cursor:pointer;
+        }
+        .dot.active {
+            background:#fff;
+        }
+
+        .content-box {
+            max-width:1000px;
+            margin:0 auto 60px;
+            background:#fff;
+            padding:45px;
+            border-radius:14px;
+            box-shadow:0 2px 14px rgba(0,0,0,0.08);
+        }
+        .content-box h2 {
+            color:#254b7c;
+            margin-bottom:18px;
+            font-size:24px;
+        }
+        .content-box p {
+            line-height:1.9;
+            font-size:16px;
+            margin-bottom:16px;
+        }
+
+        .btn-group {
+            margin-top:35px;
+            display:flex;
+            gap:20px;
+            flex-wrap:wrap;
+        }
+        .btn {
+            display:inline-block;
+            padding:14px 32px;
+            background:#254b7c;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            font-size:16px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background:#1c3961;
+        }
+        .btn-second {
+            background:#3c78d8;
+        }
+        .btn-second:hover {
+            background:#2b5ea8;
+        }
+
+        footer {
+            text-align:center;
+            padding:30px;
+            color:#777;
+            font-size:14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>社会实践作品展示</h1>
+        <p>实践出真知 · 记录实践成果</p>
+    </header>
+
+    <!-- 5张作品轮播区域 -->
+    <div class="slider-wrap">
+        <div class="slider-item active">
+            <img src="img1.jpg" alt="作品图片1">
+        </div>
+        <div class="slider-item">
+            <img src="img2.jpg" alt="作品图片2">
+        </div>
+        <div class="slider-item">
+            <img src="img3.jpg" alt="作品图片3">
+        </div>
+        <div class="slider-item">
+            <img src="img4.jpg" alt="作品图片4">
+        </div>
+        <div class="slider-item">
+            <img src="img5.jpg" alt="作品图片5">
+        </div>
+        <div class="dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h2>作品简介</h2>
+        <p>在这里填写实践作品简短介绍，概述本次社会实践做了什么、产出哪些作品，取得了什么效果。</p>
+        <p>简单描述作品特色、实践背景，让浏览者快速了解本次实践项目。</p>
+
+        <div class="btn-group">
+            <!-- 跳转详细介绍页面 -->
+            <a href="detail.html" class="btn">查看作品详细介绍</a>
+            <!-- =========预留第三页按钮，后续新建 page3.html 直接打开注释使用========= -->
+            <!-- <a href="page3.html" class="btn btn-second">跳转第三页</a> -->
+        </div>
+    </div>
+
+    <footer>
+        <p>社会实践宣传网页 ©2026</p>
+    </footer>
+
+    <script>
+        //轮播JS，5张图自动切换
+        const items = document.querySelectorAll('.slider-item');
+        const dots = document.querySelectorAll('.dot');
+        let index = 0;
+        const total = items.length;
+
+        function showSlide(i){
+            items.forEach(it => it.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            items[i].classList.add('active');
+            dots[i].classList.add('active');
+        }
+        function nextSlide(){
+            index = (index +1) % total;
+            showSlide(index);
+        }
+        //每4秒切换一张
+        let timer = setInterval(nextSlide,4000);
+
+        //点击小圆点切换
+        dots.forEach((dot,i)=>{
+            dot.addEventListener('click',()=>{
+                clearInterval(timer);
+                index = i;
+                showSlide(index);
+                timer = setInterval(nextSlide,4000);
+            })
+        })
+    </script>
+</body>
+</html>
